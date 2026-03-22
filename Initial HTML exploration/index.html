@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+    background-color: white;
+    margin: 0;
+    height: 200vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 1fr 9fr;
+    grid-template-columns: 1fr 9fr;
+
+    padding: 0;
+}
+
+.top {
+    grid-column: 1/3;
+
+    background-color: rgb(243, 243, 125);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+
+}
+
+#nav {
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    display: flex;
+    align-items: start;
+    margin-left: 15px;
+    border-radius: 100%;
+    padding: 5px;
+    text-align: center;
+    justify-content: center;
+    margin-top: 5px;
+
+}
+
+#nav:active {
+    background-color: rgb(241, 239, 239);
+
+
+}
+
+.navbar {
+
+
+    grid-column: 1/2;
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: rgb(248, 235, 238);
+    display: block;
+
+
+}
+
+
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: lemonchiffon;
+
+
+}
+
+.navbar li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50%;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    text-decoration: none;
+
+
+
+}
+
+.navbar li:active {
+    background-color: rgb(238, 235, 194);
+
+}
+
+#topword {
+    margin-left: 5rem;
+
+}
+
+.logbox {
+    width: 5rem;
+    height: 2rem;
+    background-color: black;
+    margin-top: 2rem;
+    margin-right: 1rem;
+    margin-left: auto;
+    text-align: center;
+    border-radius: 10%;
+}
+
+.tieba {
+
+    background-color: rgb(248, 235, 238);
+
+    box-sizing: border-box;
+    padding: 12px;
+
+
+    grid-column: 2/3;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 200px 200px 200px 200px;
+    gap: 20px;
+    align-content: start;
+}
+
+.navbar.hidden+.tieba {
+    grid-column: 1/3;
+}
+
+
+.t1,.t2,.t3,.t4,.t0  {
+    background-color: lightyellow;
+    position:relative;
+    border-radius: 20px; 
+
+}
+
+.countdown {
+    font-size: 3rem;
+    color: red;
+    font-weight: bold;
+    height:50%;
+    width:100%;
+    text-align: center; 
+    
+    }
+
+.dianzan{
+    background-image: url(https://ts3.tc.mm.bing.net/th/id/OIP-C.2lWYHJbofPCnLP5BfPMChQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3);
+    background-color: aliceblue;
+    background-size: contain;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    bottom: 1.5rem;
+    right:1.5rem;
+}
+
+.dianzan.clicked {
+    
+    filter: sepia(5) saturate(30) hue-rotate(-10deg) brightness(0.9);
+}
+
+.dianzan-count {
+    position: absolute;
+    bottom: 1.6rem;
+    right: 3.6rem;
+    font-size: 1rem;
+    color: black;
+    background: rgba(255,255,255,0.6);
+    padding: 0 0.2rem;
+    border-radius: 0.2rem;
+}
+
+#post1 {
+    background-color: black;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100%;
+    position:fixed;
+    bottom:1rem;
+    right:1rem;
+    display: flex;
+    font-size: large;
+    z-index: 99999;
+    color:white;
+    
+}
+
+#jiahao{
+    left:40%;
+    top:20%;
+    position: relative;
+    font-size: 1rem;
+   
+}
+
+.h_0{
+    font-size: 2rem;
+}
+.h_1{
+    font-size: 1.5rem;
+    color:gray;
+}
+
+.h_2{
+    font-size: 1rem;
+}
+
+
+
+
+
+
+
+    </style>
+    <link rel="stylesheet" href="./css.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="top">
+
+        <label id="nav" onclick="fun()">
+            <div style="color: white;">☰</div>
+        </label>
+
+        <h1 id="topword">山海天涯</h1>
+
+        <div class="logbox">
+            <div style="color: white;">登录</div>
+        </div>
+
+    </div>
+
+    <div class="navbar" id="navbar">
+        <ul>
+            <li>Explore</li>
+            <li>Post</li>
+            <li>Home</li>
+            <li>Account</li>
+        </ul>
+    </div>
+    <div class="tieba">
+    <div id="post1">
+        <div id="jiahao"> + </div>
+    </div>
+    <script src="./js.js">
+        // const { createElement } = require("react");
+
+let realtimeNow = '';
+
+let countdownToNov1 = '';
+
+function updateTimeVars() {
+    const now = new Date();
+    // 格式化当前时间
+    realtimeNow = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0') + ' ' +
+        String(now.getHours()).padStart(2, '0') + ':' +
+        String(now.getMinutes()).padStart(2, '0') + ':' +
+        String(now.getSeconds()).padStart(2, '0');
+
+    // 目标时间 2025-11-01 00:00:00
+    const target = new Date('2025-11-01T00:00:00');
+    let diff = target - now;
+    if (diff < 0) diff = 0;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    countdownToNov1 = `${days}天${hours}小时${minutes}分${seconds}秒`;
+}
+
+
+setInterval(updateTimeVars, 1000);
+updateTimeVars();
+
+var a = '现在是'+realtimeNow+'\n距离2025年11月1日还有\n';
+let b = `<div class="countdown">${countdownToNov1}</div>`;
+
+const navbar = document.getElementById('navbar')
+const content = [
+    a + b,
+    '',
+    '代码的那边是什么',
+    '推推clannad,世纪神番',
+    "赞美世界",
+]
+
+function fun() {
+
+    const isHidden = navbar.classList.toggle('hidden')
+
+    navbar.style.display = isHidden ? 'none' : 'block'
+}
+
+const tieba_ele = document.getElementsByClassName('tieba')[0];
+
+for (var i = 0; i < 5; i++) {
+    const t_i = document.createElement('div');
+    t_i.className = 't' + i;
+    tieba_ele.appendChild(t_i);
+    t_i.innerHTML = String(content[i]).replace(/\n/g, '<br>');
+    
+
+}
+
+
+
+
+for (var j = 1; j < 5; j++) {
+    const container = document.querySelector('.t' + j);
+    if (!container) continue;
+
+    
+    const img = document.createElement('div');
+    img.className = 'dianzan';
+    img.dataset.liked = 'false';
+
+   
+    const count = document.createElement('span');
+    count.className = 'dianzan-count';
+    count.textContent = '0';
+
+  
+    container.appendChild(img);
+    container.appendChild(count);
+
+   
+    img.addEventListener('click', function () {
+        if (this.dataset.liked === 'true') return;
+        this.dataset.liked = 'true';
+        this.classList.add('clicked');
+        const next = this.nextSibling;
+        if (next && next.classList && next.classList.contains('dianzan-count')) {
+            next.textContent = String(Number(next.textContent || 0) + 1);
+        }
+    });
+}
+
+
+const contentx =['学生在线,精彩无限','2025年10月26日','学生在线,精彩无限，和有趣的人发现更精彩的自己']
+const t1 = document.querySelector('.t1');
+for(var k=0;k<3;k++){
+    const h_k =document.createElement('div')
+    h_k.className='h_'+k;
+    t1.appendChild(h_k);
+    h_k.innerHTML=contentx[k] 
+}
+
+
+
+
+    </script>
+</body>
+
+</html>
